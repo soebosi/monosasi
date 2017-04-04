@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div id="todoapp">
+  <header>
+    <h1>todos</h1>
+    <input
+      id="new-todo"
+      data-bind="enterKey: add, value: todoToAdd, valueUpdate: 'afterkeydown'"
+    >
+  </header>
+  <section id="main" data-bind="visible: todos().length">
+    <input id="toggle-all" type="checkbox" data-bind="checked: allCompleted">
+    <label for="toggle-all">Mark all as complete</label>
+    <ul id="todo-list" data-bind="foreach: todos">
+      <li data-bind="css: { completed: completed }">
+        <div class="view">
+          <input type="checkbox" data-bind="checked: completed">
+          <label data-bind="text: title"></label>
+          <button data-bind="click: $parent.remove">remove</button>
+        </div>
+      </li>
+    </ul>
+  </section>
+  <footer data-bind="visible: completedCount() || remainingCount()">
+    <span id="todo-count">
+      <span data-bind="text: remainingCount">0</span>
+      <span data-bind="text: getLabel(remainingCount)"></span>
+      <button id="clear-completed" data-bind="click: removeCompleted">Clear completed</button>
+    </span>
+  </footer>
+  <script src="./node_modules/knockout/build/output/knockout-latest.js"></script>
+  <script src="./index.js"></script>
+</div>
+</body>
+</html>
