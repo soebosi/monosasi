@@ -61,4 +61,5 @@ var TodoViewModel = function (items) {
     return ko.utils.unwrapObservable(count) === 1 ? 'item' : 'items';
   };
 };
-ko.applyBindings(new TodoViewModel());
+var todoViewModel = new TodoViewModel();
+ko.applyBindings(todoViewModel);
