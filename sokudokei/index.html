@@ -1,0 +1,96 @@
+<html>
+<head>
+<style>
+#todo-mvc {
+  width: 500px;
+  height: 300px;
+}
+</style>
+<script>
+// For yakusoku's error in browser
+var module = {};
+</script>
+<script src="./yakusoku/src/promise.js"></script>
+<script>
+var numberOfItemsToAdd = 100;
+window.onload = function() {
+  var todoMvc = document.getElementById("todo-mvc");
+  var contentWindow;
+  var contentDocument;
+  var totalTime;
+
+  function addTodos() {
+    return new Promise(function(resolve) {
+      setTimeout(function() {
+        var start = Date.now();
+        for (var i = 0; i < numberOfItemsToAdd; i++) {
+          contentWindow.todoViewModel.todoToAdd('Something to do ' + i);
+          contentWindow.todoViewModel.add();
+        }
+        var end = Date.now();
+        totalTime += end - start;
+        resolve();
+      }, 0);
+    });
+  }
+  function checkedTodos() {
+    return new Promise(function(resolve) {
+      setTimeout(function() {
+        var start = Date.now();
+        var checkboxes = contentDocument.querySelectorAll('.toggle');
+        checkboxes.forEach(function(checkbox) {
+          checkbox.click();
+        });
+        var end = Date.now();
+        totalTime += end - start;
+        resolve();
+      }, 0);
+    });
+  }
+  function removeTodos() {
+    return new Promise(function(resolve) {
+      setTimeout(function() {
+        var start = Date.now();
+        var deleteButtons = contentDocument.querySelectorAll('.destroy');
+        deleteButtons.forEach(function(deleteButton) {
+          deleteButton.click();
+        });
+        var end = Date.now();
+        totalTime += end - start;
+        resolve();
+      }, 0);
+    });
+  }
+
+  function runTodoMvcTest(callback) {
+    totalTime = 0;
+    return new Promise(function(resolve) {
+      todoMvc.src = './todomvc/knockout/index.html';
+      todoMvc.onload = function() {
+        contentWindow = todoMvc.contentWindow;
+        contentDocument = todoMvc.contentDocument;
+        addTodos()
+          .then(checkedTodos)
+          .then(removeTodos)
+          .then(function() {
+            resolve();
+          });
+      };
+    });
+  }
+
+  runTodoMvcTest().then(function() {
+    var result = document.getElementById('result_total');
+    result.innerHTML = totalTime;
+  });
+};
+</script>
+</head>
+<body>
+<div>
+Total:<span id="result_total"></span>
+</div>
+<iframe id="todo-mvc" src="">
+</iframe>
+</body>
+</html>
