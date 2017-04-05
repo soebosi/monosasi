@@ -18,9 +18,9 @@
     <ul id="todo-list" data-bind="foreach: todos">
       <li data-bind="css: { completed: completed }">
         <div class="view">
-          <input type="checkbox" data-bind="checked: completed">
+          <input type="checkbox" data-bind="checked: completed" class="toggle">
           <label data-bind="text: title"></label>
-          <button data-bind="click: $parent.remove">remove</button>
+          <button data-bind="click: $parent.remove" class="destroy">remove</button>
         </div>
       </li>
     </ul>
