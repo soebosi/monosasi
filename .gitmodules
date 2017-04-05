@@ -1,0 +1,3 @@
+[submodule "sokudokei/yakusoku"]
+	path = sokudokei/yakusoku
+	url = git@github.com:kumabook/yakusoku.git
